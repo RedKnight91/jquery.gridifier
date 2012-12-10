@@ -1,11 +1,11 @@
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
+	<head>
 		<title>jQuery.gridifier - Free image resizing jQuery plugin</title>
-		<link rel="Stylesheet" type="text/css" href="css/gridifier.css" />
-		<link href='http://fonts.googleapis.com/css?family=Graduate|Signika:400,300,700' rel='stylesheet' type='text/css'>
+		<link rel="Stylesheet" href="gridifier.css" />
+		<link href='http://fonts.googleapis.com/css?family=Graduate|Signika:400,300,700' rel='stylesheet'>
 
-		<style type="text/css">
+		<style>
 			html { background: #fff; color: #333; font: 15px Signika; }
 			body { margin: 30px; }
 			
@@ -32,9 +32,9 @@
 			.container.big { width: 150px; height: 150px; }
 		</style>
 		
-		<script type="text/javascript" src="scripts/jquery-1.8.2.min.js"></script>
-		<script type="text/javascript" src="scripts/jquery.gridifier.min.js"></script>
-		<script type="text/javascript">			
+		<script src="jquery-1.8.3.min.js"></script>
+		<script src="jquery.gridifier.min.js"></script>
+		<script>			
 			$(window).load( function(){
 				$(".container:not('forceFit'):not('leftTop'):not('centerTop'):not('rightTop'):not('leftCenter'):not('centerCenter'):not('rightCenter'):not('leftBottom'):not('centerBottom'):not('rightBottom')").gridify({
 					//debug: true
