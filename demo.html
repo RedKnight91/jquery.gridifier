@@ -1,0 +1,823 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+		<title>jQuery.gridifier - Free image resizing jQuery plugin</title>
+		<link rel="Stylesheet" type="text/css" href="css/gridifier.css" />
+		<link href='http://fonts.googleapis.com/css?family=Graduate|Signika:400,300,700' rel='stylesheet' type='text/css'>
+
+		<style type="text/css">
+			html { background: #fff; color: #333; font: 15px Signika; }
+			body { margin: 30px; }
+			
+			
+			h1 { font-size: 1.5em; margin-top: 80px; }
+			h2 { font-size: 1.2em; }
+			h1.title { font: 3em Graduate; text-align: center; }
+			
+			a { color: #06C; text-decoration: none; }
+			a:focus, a:hover { color: #09F; text-decoration: underline; }
+			
+			td { text-align: center; }
+		
+			p.description { font: 300 1.5em Signika; width: 600px; max-width: 100%; margin: 0 auto; }
+			pre { background: #EEE; padding: 17px 10px 0 10px; display: block; }
+			.notice { background: #FFF6BF; color: #514721; border: 2px solid #FFD324; padding: 10px; }
+			.alert { background: #FBE3E4; color: #8A1F11; border: 2px solid #FBC2C4; padding: 10px; }
+			
+			.container { width: 100px; height: 100px; border: 5px solid white; box-shadow: 0 1px 4px #444; margin: 5px; display: inline-block; *display: inline; *zoom: 1; vertical-align: top; behavior: url(scripts/PIE.htc); }
+			.container.wide { width: 150px; height: 100px; }
+			.container.tall { width: 100px; height: 150px; }
+			.container.adapt { max-width: 150px; max-height: 150px; width: auto; height: auto; }
+			.container.percent { width: 8%; height: 70%; }
+			.container.big { width: 150px; height: 150px; }
+		</style>
+		
+		<script type="text/javascript" src="scripts/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="scripts/jquery.gridifier.min.js"></script>
+		<script type="text/javascript">			
+			$(window).load( function(){
+				$(".container:not('forceFit'):not('leftTop'):not('centerTop'):not('rightTop'):not('leftCenter'):not('centerCenter'):not('rightCenter'):not('leftBottom'):not('centerBottom'):not('rightBottom')").gridify({
+					//debug: true
+				});
+				
+				$(".container.forceFit:not('leftTop'):not('centerTop'):not('rightTop'):not('leftCenter'):not('centerCenter'):not('rightCenter'):not('leftBottom'):not('centerBottom'):not('rightBottom')").gridify({
+					forceFit: true,
+					//debug: true
+				});
+				
+				$(".container.leftTop").gridify({
+					forceFit: true,
+					align: "left top"
+				});
+				
+				$(".container.centerTop").gridify({
+					forceFit: true,
+					align: "center top"
+				});
+				
+				$(".container.rightTop").gridify({
+					forceFit: true,
+					align: "right top"
+				});
+				
+				$(".container.leftCenter").gridify({
+					forceFit: true,
+					align: "left center"
+				});
+				
+				$(".container.centerCenter").gridify({
+					forceFit: true,
+					align: "center center"
+				});
+				
+				$(".container.rightCenter").gridify({
+					forceFit: true,
+					align: "right center"
+				});
+				
+				$(".container.leftBottom").gridify({
+					forceFit: true,
+					align: "left bottom"
+				});
+				
+				$(".container.centerBottom").gridify({
+					forceFit: true,
+					align: "center bottom"
+				});
+				
+				$(".container.rightBottom").gridify({
+					forceFit: true,
+					align: "right bottom"
+				});
+			});			
+		</script>
+	</head>
+	<body>
+		<h1 class="title">jQuery.gridifier</h1>
+		
+		<p class="description">
+			<b>Gridifier</b> is a lightweight jQuery plugin whose only purpose is to fit your images into nifty boxes.<br />
+			It even provides some options for you to customize its behaviour.<br /><br />
+			<b>Gridifier</b> was made to be used in real websites, so it's optimized for the web, it's flexible and it works!
+		</p>
+		
+		<h3>Menu</h3>
+		<ul>
+			<li><a href="#usage">Basic usage</a></li>
+			<li><a href="#settings">Settings</a></li>
+			<li><a href="#examples">Examples</a></li>
+		</ul>
+		
+		<h1 id="usage">Basic usage</h1>
+		<p>
+			It doesn't take much to implement Gridifier. Just load the script in your page:
+		</p>
+		<pre>
+&lt;script src="jquery.gridify.js"&gt;&lt;/script&gt;
+		</pre>
+		<p>
+			Then choose your target containers (the elements containing the images to resize). The container should have at least one <b>CSS</b> property defined among <b>width</b>, <b>height</b>, <b>max-width</b> and <b>max-height</b> (or else it'll stretch to the image's size).<br />
+			Of course you can experiment, and even tweak <b>Gridifier</b>'s CSS and script to fit your own needs!<br />
+			These are, however, the three <b>base models</b> you can start using right away:
+		</p>
+		<pre>
+&lt;container&gt;
+	&lt;img /&gt;
+&lt;/container&gt;
+		</pre>
+		<pre>
+&lt;container&gt;
+	&lt;a&gt;
+		&lt;img /&gt;
+	&lt;/a&gt;
+&lt;/container&gt;
+		</pre>
+		<pre>
+&lt;container&gt;
+	&lt;img /&gt;
+	&lt;cover&gt;
+		&lt;text&gt;
+		&lt;/text&gt;
+	&lt;/cover&gt;
+&lt;/container&gt;
+		</pre>
+		<p class="notice">
+			<b>NOTE:</b> <b>container</b>, <b>cover</b> and <b>text</b> are, of course, meta-language, meaning that they're not real tags.<br />
+			You can use anything you want as a container for your image, best practices are using <b>div</b>, <b>li</b> tags, or the new HTML5 <b>figure</b> tag.<br />
+			The container is identified by the CSS default with the <b>container</b> class, but you can change that.<br /><br />
+			
+			<b>Img</b> is, of course, the image you want to fit in the container.<br /><br />
+			
+			You can wrap that <b>img</b> in an <b>anchor</b>, if you want it to be clickable (see example 2).<br /><br />
+			
+			The <b>cover</b> is a cover for the element, designed to slide over the image on <b>hover</b>, to display informations (like a title for the image), and optionally to provide a clickable link, using an <b>anchor</b> as the cover. <br />
+			This element is identified with the <b>grdCover</b> class, but you can change that (you'd have to change both the <b>.css</b> and <b>.js</b> files).
+		</p>
+		
+		<p>
+			finally, call the <b>.gridify()</b> function in your pages on <b>window.load</b> event:
+		</p>
+		<pre>
+&lt;script&gt;
+	$(window).load( function(){
+		$(".container").gridify();
+	});
+&lt;/script&gt;
+		</pre>
+		<p class="notice">
+			<b>NOTE:</b> Why the <b>window.load</b> event?<br /><br />
+			When a page is loading, it launches a series of events that indicate the loading progress. The first of these is <b>document.ready</b> (the well-known <b>$()</b> or <b>jQuery()</b> ),
+			which means that the structure of the page has been loaded.<br />
+			That structure is the <b>DOM</b> (<b>Document Object Model</b>), the tree of the page's elements. When the DOM is loaded, the images have been loaded as nodes of the DOM,
+			but they haven't been actually loaded as images.<br /><br />
+			For the proper functioning of <b>Gridifier</b> we need the images to be fully charged, and this is true when the page triggers the <b>window.load</b> event.
+		</p>
+		
+		<h1 id="settings">Settings</h1>
+		<p>
+			1. <b>forceFit</b>, which forces <b>Gridifier</b> into upscaling images which are smaller than their container.<br />
+			This feature is disabled by default, for not everyone likes their images to be upscaled (image quality is decreased this way).
+		</p>
+		<p>
+			To enable <b>forceFit</b> use:
+		</p>
+		<pre>
+$(window).load( function(){
+	$(".container").gridify({
+		forceFit: true
+	});
+});
+		</pre>
+		<p>
+			2. <b>debug</b>, which outputs the before and after of the images in your browser's console, making it easy for you to debug the script.
+		</p>
+		<p>
+			To enable <b>debug</b> use:
+		</p>
+		<pre>
+$(window).load( function(){
+	$(".container").gridify({
+		debug: true
+	});
+});
+		</pre>
+		<p>
+			3. <b>align</b>, which lets you choose how to align the image inside the container.<br />
+			The only possible values are <b>left</b>, <b>center</b>, <b>right</b> for horizontal alignment, and <b>top</b>, <b>center</b>, <b>bottom</b> for vertical alignment.
+		</p>
+		
+		<h1 id="examples">Examples</h1>
+		
+		<h2>Basic usage of the .gridify() function</h2>
+		<pre>
+&lt;script&gt;
+	$(window).load( function(){
+		$(".container").gridify();
+	});
+&lt;/script&gt;
+		</pre>
+		<p class="notice">
+			<b>NOTE:</b> Of course <b>.container</b> could be any id, class, or selector you chose for your container.
+		</p>
+	
+		<h2>Output</h2>
+		<p>
+			(With the three <b>basic types</b> of container)
+		</p>
+		<table>
+			<tr>
+				<td>Normal</td>
+				<td>Clickable</td>
+				<td>With clickable cover</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="container">
+						<img src="http://placehold.it/500x500" alt="500x500" />
+					</div>
+				</td>
+				<td>
+					<div class="container">
+						<a href="#">
+							<img src="http://placehold.it/500x500" alt="500x500" />
+						</a>
+					</div>
+				</td>
+				<td>
+					<div class="container">
+						<img src="http://placehold.it/500x500" alt="500x500" />
+						<a href="#" class="grdCover">
+							Hello there!
+						</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+		<p>(With square, wide and tall fixed-size containers, and containers with <b>anchor</b> tag wrapping the <b>img</b>)</p>
+		
+		<!--[if lt IE 9]>
+			<p class="notice">
+				<b>NOTE:</b> If you see a dark background in the containers, it's because of the <a href="http://css3pie.com/">CSS3 PIE</a> plugin used to enable <b>box-shadow</b> in older browsers.<br />
+				By the way, stop using older versions of Internet Explorer!
+			<p/>
+		<![endif]-->
+		
+		<div>
+			<div class="container">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container">
+				<img src="http://placehold.it/100x100" alt="100x100" />
+			</div>
+			<div class="container">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container wide">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container wide">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container wide">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container wide">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container wide">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container wide">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container wide">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container tall">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container tall">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container tall">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container tall">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container tall">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container tall">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container tall">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container">
+				<a href="#">
+					<img src="http://placehold.it/500x500" alt="500x500" />
+				</a>
+			</div>
+			<div class="container">
+				<a href="#">
+					<img src="http://placehold.it/100x500" alt="100x500" />
+				</a>
+			</div>
+			<div class="container">
+				<a href="#">
+					<img src="http://placehold.it/500x100" alt="500x100" />
+				</a>
+			</div>
+			<div class="container">
+				<a href="#">
+					<img src="http://placehold.it/500x800" alt="500x800" />
+				</a>
+			</div>
+			<div class="container">
+				<a href="#">
+					<img src="http://placehold.it/800x500" alt="800x500" />
+				</a>
+			</div>
+			<div class="container">
+				<a href="#">
+					<img src="http://placehold.it/100x100" alt="100x100" />
+				</a>
+			</div>
+			<div class="container">
+				<a href="#">
+					<img src="http://placehold.it/100x50" alt="100x50" />
+				</a>
+			</div>
+			<div class="container">
+				<a href="#">
+					<img src="http://placehold.it/50x100" alt="50x100" />
+				</a>
+			</div>
+		</div>
+		
+		<p>
+			(With square, wide and tall variable-size containers, using only <b>max-width</b> and <b>max-height</b> to restrain their size)<br />
+		</p>
+		<p class="notice">
+			<b>forceFit</b> would be useless in this case: if the containers is fitting to the image, the image doesn't need to fit the container.
+		</p>
+		
+		<div>
+			<div class="container adapt">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container adapt">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container adapt">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container adapt">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container adapt">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container adapt">
+				<img src="http://placehold.it/100x100" alt="100x100" />
+			</div>
+			<div class="container adapt">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container adapt">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container adapt">
+				<a href="#">
+					<img src="http://placehold.it/500x500" alt="500x500" />
+				</a>
+			</div>
+			<div class="container adapt">
+				<a href="#">
+					<img src="http://placehold.it/100x500" alt="100x500" />
+				</a>
+			</div>
+			<div class="container adapt">
+				<a href="#">
+					<img src="http://placehold.it/500x100" alt="500x100" />
+				</a>
+			</div>
+			<div class="container adapt">
+				<a href="#">
+					<img src="http://placehold.it/500x800" alt="500x800" />
+				</a>
+			</div>
+			<div class="container adapt">
+				<a href="#">
+					<img src="http://placehold.it/800x500" alt="800x500" />
+				</a>
+			</div>
+			<div class="container adapt">
+				<a href="#">
+					<img src="http://placehold.it/100x100" alt="100x100" />
+				</a>
+			</div>
+			<div class="container adapt">
+				<a href="#">
+					<img src="http://placehold.it/100x50" alt="100x50" />
+				</a>
+			</div>
+			<div class="container adapt">
+				<a href="#">
+					<img src="http://placehold.it/50x100" alt="50x100" />
+				</a>
+			</div>
+		</div>
+		
+		<p>(With variable-size containers (using <b>percentage</b> in <b>width</b> and <b>height</b> properties)</p>
+		<p class="notice">
+			<b>NOTE:</b> This method works only if the container has a super-container with defined height (not a percentage).
+		</p>
+		<p>
+			If the container's width and height are actually gonna vary (maybe on window resize, or other events), you should call the <b>.gridify()</b> function again.<br />
+			You can do that by using this additional piece of code (don't remove the <b>window.load</b> part!) :
+		</p>
+		<pre>
+$(window).resize( function(){
+	$(".grid img").gridify();
+});
+		</pre>
+		
+		<div style="height: 200px;">
+			<div class="container percent">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container percent">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container percent">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container percent">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container percent">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container percent">
+				<img src="http://placehold.it/100x100" alt="100x100" />
+			</div>
+			<div class="container percent">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container percent">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		
+		<div style="height: 200px;">
+			<div class="container percent">
+				<a href="#">
+					<img src="http://placehold.it/500x500" alt="500x500" />
+				</a>
+			</div>
+			<div class="container percent">
+				<a href="#">
+					<img src="http://placehold.it/100x500" alt="100x500" />
+				</a>
+			</div>
+			<div class="container percent">
+				<a href="#">
+					<img src="http://placehold.it/500x100" alt="500x100" />
+				</a>
+			</div>
+			<div class="container percent">
+				<a href="#">
+					<img src="http://placehold.it/500x800" alt="500x800" />
+				</a>
+			</div>
+			<div class="container percent">
+				<a href="#">
+					<img src="http://placehold.it/800x500" alt="800x500" />
+				</a>
+			</div>
+			<div class="container percent">
+				<a href="#">
+					<img src="http://placehold.it/100x100" alt="100x100" />
+				</a>
+			</div>
+			<div class="container percent">
+				<a href="#">
+					<img src="http://placehold.it/100x50" alt="100x50" />
+				</a>
+			</div>
+			<div class="container percent">
+				<a href="#">
+					<img src="http://placehold.it/50x100" alt="50x100" />
+				</a>
+			</div>
+		</div>		
+		
+		<br />
+		<h2>forceFit enabled</h2>
+		<pre>
+&lt;script&gt;
+	$(window).load( function(){
+		$(".container").gridify({
+			forceFit: true
+		});
+	});
+&lt;/script&gt;
+		</pre>
+		
+		<h2>Output</h2>
+		<p>(As you can see, the result is much nicer now, but you should make sure to make your <b>images</b> bigger than their <b>container</b>, or they'll be stretched)</p>
+		<div>
+			<div class="container forceFit">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container forceFit">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container forceFit">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container forceFit">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container forceFit">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container forceFit">
+				<img src="http://placehold.it/100x100" alt="100x100" />
+			</div>
+			<div class="container forceFit">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container forceFit">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container wide forceFit">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container wide forceFit">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container wide forceFit">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container wide forceFit">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container wide forceFit">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container wide forceFit">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container wide forceFit">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container tall forceFit">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container tall forceFit">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container tall forceFit">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container tall forceFit">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container tall forceFit">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container tall forceFit">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container tall forceFit">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/500x500" alt="500x500" />
+				</a>
+			</div>
+			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/100x500" alt="100x500" />
+				</a>
+			</div>
+			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/500x100" alt="500x100" />
+				</a>
+			</div>
+			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/500x800" alt="500x800" />
+				</a>
+			</div>
+			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/800x500" alt="800x500" />
+				</a>
+			</div>
+			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/100x100" alt="100x100" />
+				</a>
+			</div>
+			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/100x50" alt="100x50" />
+				</a>
+			</div>
+			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/50x100" alt="50x100" />
+				</a>
+			</div>
+		</div>
+		
+		<p>(With variable-size containers (using <b>percentage</b> in <b>width</b> and <b>height</b> properties)</p>
+		<p class="notice"><b>NOTE:</b> This method works only if the container has a super-container with defined height (not a percentage).</p>
+		<p>
+			If the container's width and height are actually gonna vary (maybe on window resize, or other events), you should call the <b>.gridify()</b> function again.<br />
+			You can do that by using this additional piece of code (don't remove the <b>window.load</b> part!) :
+		</p>
+		<pre>
+$(window).resize( function(){
+	$(".grid img").gridify();
+});
+		</pre>
+		
+		<div style="height: 200px;">
+			<div class="container percent forceFit">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container percent forceFit">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container percent forceFit">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container percent forceFit">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container percent forceFit">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container percent forceFit">
+				<img src="http://placehold.it/100x100" alt="100x100" />
+			</div>
+			<div class="container percent forceFit">
+				<img src="http://placehold.it/200x100" alt="200x100" />
+			</div>
+		</div>
+		<div style="height: 200px;">
+			<div class="container percent forceFit">
+				<a href="#">
+					<img src="http://placehold.it/500x500" alt="500x500" />
+				</a>
+			</div>
+			<div class="container percent forceFit">
+				<a href="#">
+					<img src="http://placehold.it/100x500" alt="100x500" />
+				</a>
+			</div>
+			<div class="container percent forceFit">
+				<a href="#">
+					<img src="http://placehold.it/500x100" alt="500x100" />
+				</a>
+			</div>
+			<div class="container percent forceFit">
+				<a href="#">
+					<img src="http://placehold.it/500x800" alt="500x800" />
+				</a>
+			</div>
+			<div class="container percent forceFit">
+				<a href="#">
+					<img src="http://placehold.it/800x500" alt="800x500" />
+				</a>
+			</div>
+			<div class="container percent forceFit">
+				<a href="#">
+					<img src="http://placehold.it/100x100" alt="100x100" />
+				</a>
+			</div>
+			<div class="container percent forceFit">
+				<a href="#">
+					<img src="http://placehold.it/100x50" alt="100x50" />
+				</a>
+			</div>
+			<div class="container percent forceFit">
+				<a href="#">
+					<img src="http://placehold.it/50x100" alt="50x100" />
+				</a>
+			</div>
+		</div>
+				
+		<br />
+		<h2>align property</h2>
+		<pre>
+&lt;script&gt;
+	$(window).load( function(){
+		$(".container").gridify({
+			align: leftTop
+		});
+	});
+&lt;/script&gt;
+		</pre>
+		<h2>Output</h2>
+		<div>
+			<div class="container leftTop">
+				<img src="http://placehold.it/300x200" alt="300x200" />
+			</div>
+			<div class="container centerTop">
+				<img src="http://placehold.it/300x200" alt="300x200" />
+			</div>
+			<div class="container rightTop">
+				<img src="http://placehold.it/300x200" alt="300x200" />
+			</div>
+			<div class="container centerTop">
+				<img src="http://placehold.it/200x300" alt="200x300" />
+			</div>
+			<div class="container centerCenter">
+				<img src="http://placehold.it/200x300" alt="200x300" />
+			</div>
+			<div class="container centerBottom">
+				<img src="http://placehold.it/200x300" alt="200x300" />
+			</div>
+		</div>
+		
+		<br />
+		<h2>Realistic example of Gridifier usage</h2>
+		<p>(Using forceFit)</p>
+		
+		<div>
+			<div class="container big forceFit">
+				<img src="http://flickholdr.com/200/500/nikon" alt="500x500" />
+			</div>
+			<div class="container big forceFit">
+				<img src="http://flickholdr.com/200/500/nikon" alt="200x500" />
+				<a href="#" class="grdCover">
+					Hello there!
+				</a>
+			</div>
+			<div class="container big forceFit">
+				<a href="#">
+					<img src="http://flickholdr.com/500/200/nikon" alt="500x200" />
+				</a>
+			</div>
+			<div class="container big forceFit">
+				<img src="http://flickholdr.com/500/800/nikon" alt="500x800" />
+			</div>
+			<div class="container big forceFit">
+				<img src="http://flickholdr.com/800/500/nikon" alt="800x500" />
+				<a href="#" class="grdCover">
+					Hello there!
+				</a>
+			</div>
+			<div class="container big forceFit">
+				<img src="http://flickholdr.com/200/200/nikon" alt="200x200" />
+			</div>
+			<div class="container big forceFit">
+				<img src="http://flickholdr.com/400/200/nikon" alt="400x200" />
+			</div>
+			<div class="container big forceFit">
+				<img src="http://flickholdr.com/200/400/nikon" alt="200x400" />
+				<a href="#" class="grdCover">
+					Hello there!
+				</a>
+			</div>
+		</div>
+	</body>
+</html>
