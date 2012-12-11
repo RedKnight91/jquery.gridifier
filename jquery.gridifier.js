@@ -61,7 +61,12 @@
 					if (h > cH) { $container.css("height", $container.css("max-height") ); }
 					if (forceFit) { $img.addClass("grdForce"); }
 				}
-				if (fullView) { $img.addClass("grdFullView"); }
+				if (fullView) {
+					$img.addClass("grdFullView");
+					if ( $img.css("max-height") == "none") {
+						$img.css("max-height", $container.height() );
+					};
+				}
 				
 				w = $img.width();
 				h = $img.height();
