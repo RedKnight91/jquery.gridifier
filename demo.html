@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>jQuery.gridifier - Free image resizing jQuery plugin</title>
-		<link rel="Stylesheet" href="gridifier.css" />
+		<link rel="Stylesheet" href="css/gridifier.css" />
 		<link href='http://fonts.googleapis.com/css?family=Graduate|Signika:400,300,700' rel='stylesheet'>
 
 		<style>
 			html { background: #fff; color: #333; font: 15px Signika; }
 			body { margin: 30px; }
-			
 			
 			h1 { font-size: 1.5em; margin-top: 80px; }
 			h2 { font-size: 1.2em; }
@@ -24,7 +23,7 @@
 			.notice { background: #FFF6BF; color: #514721; border: 2px solid #FFD324; padding: 10px; }
 			.alert { background: #FBE3E4; color: #8A1F11; border: 2px solid #FBC2C4; padding: 10px; }
 			
-			.container { width: 100px; height: 100px; border: 5px solid white; box-shadow: 0 1px 4px #444; margin: 5px; display: inline-block; *display: inline; *zoom: 1; vertical-align: top; behavior: url(PIE.htc); }
+			.container { width: 100px; height: 100px; border: 5px solid white; box-shadow: 0 1px 4px #444; margin: 5px; display: inline-block; *display: inline; *zoom: 1; vertical-align: top; behavior: url(scripts/PIE.htc); }
 			.container.wide { width: 150px; height: 100px; }
 			.container.tall { width: 100px; height: 150px; }
 			.container.adapt { max-width: 150px; max-height: 150px; width: auto; height: auto; }
@@ -32,8 +31,8 @@
 			.container.big { width: 150px; height: 150px; }
 		</style>
 		
-		<script src="jquery-1.8.3.min.js"></script>
-		<script src="jquery.gridifier.min.js"></script>
+		<script src="scripts/jquery-1.8.3.min.js"></script>
+		<script src="scripts/jquery.gridifier.js"></script>
 		<script>			
 			$(window).load( function(){
 				$(".container:not('forceFit'):not('leftTop'):not('centerTop'):not('rightTop'):not('leftCenter'):not('centerCenter'):not('rightCenter'):not('leftBottom'):not('centerBottom'):not('rightBottom')").gridify({
@@ -41,7 +40,12 @@
 				});
 				
 				$(".container.forceFit:not('leftTop'):not('centerTop'):not('rightTop'):not('leftCenter'):not('centerCenter'):not('rightCenter'):not('leftBottom'):not('centerBottom'):not('rightBottom')").gridify({
-					forceFit: true,
+					forceFit: true
+					//debug: true
+				});
+				
+				$(".container.fullView:not('forceFit'):not('leftTop'):not('centerTop'):not('rightTop'):not('leftCenter'):not('centerCenter'):not('rightCenter'):not('leftBottom'):not('centerBottom'):not('rightBottom')").gridify({
+					fullView: true
 					//debug: true
 				});
 				
@@ -103,10 +107,33 @@
 		
 		<h3>Menu</h3>
 		<ul>
+			<li><a href="#support">Browser support</a></li>
 			<li><a href="#usage">Basic usage</a></li>
 			<li><a href="#settings">Settings</a></li>
 			<li><a href="#examples">Examples</a></li>
 		</ul>
+		
+		<h1 id="support">Browser support</h1>
+		<p>
+			<b>Gridifier</b> is supported by all the major browsers (Chrome, Firefox, IE 7+, Safari, Opera)
+		</p>
+		<div>
+			<div class="container fullView">
+				<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Google_Chrome_icon_%282011%29.svg/170px-Google_Chrome_icon_%282011%29.svg.png" alt="Google Chrome" />
+			</div>
+			<div class="container fullView">
+				<img src="http://upload.wikimedia.org/wikipedia/commons/e/e7/Mozilla_Firefox_3.5_logo_256.png" alt="Mozilla Firefox" />
+			</div>
+			<div class="container fullView">
+				<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Internet_Explorer_9_icon.svg/109px-Internet_Explorer_9_icon.svg.png" alt="Internet Explorer" />
+			</div>
+			<div class="container fullView">
+				<img src="http://upload.wikimedia.org/wikipedia/en/6/61/Apple_Safari.png" alt="Safari" />
+			</div>
+			<div class="container fullView">
+				<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Opera_O.svg/512px-Opera_O.svg.png" alt="Opera" />
+			</div>
+		</div>
 		
 		<h1 id="usage">Basic usage</h1>
 		<p>
@@ -189,7 +216,20 @@ $(window).load( function(){
 });
 		</pre>
 		<p>
-			2. <b>debug</b>, which outputs the before and after of the images in your browser's console, making it easy for you to debug the script.
+			2. <b>fullView</b>, which forces the image to be fully visible inside the container (restraining width and height).
+		</p>
+		<p>
+			To enable <b>fullView</b> use:
+		</p>
+		<pre>
+$(window).load( function(){
+	$(".container").gridify({
+		fullView: true
+	});
+});
+		</pre>
+		<p>
+			3. <b>debug</b>, which outputs the before and after of the images in your browser's console, making it easy for you to debug the script.
 		</p>
 		<p>
 			To enable <b>debug</b> use:
@@ -202,7 +242,7 @@ $(window).load( function(){
 });
 		</pre>
 		<p>
-			3. <b>align</b>, which lets you choose how to align the image inside the container.<br />
+			4. <b>align</b>, which lets you choose how to align the image inside the container.<br />
 			The only possible values are <b>left</b>, <b>center</b>, <b>right</b> for horizontal alignment, and <b>top</b>, <b>center</b>, <b>bottom</b> for vertical alignment.
 		</p>
 		
@@ -661,6 +701,134 @@ $(window).resize( function(){
 				</a>
 			</div>
 			<div class="container forceFit">
+				<a href="#">
+					<img src="http://placehold.it/50x100" alt="50x100" />
+				</a>
+			</div>
+		</div>
+		
+		<br />
+		<h2>fullView enabled</h2>
+		<pre>
+&lt;script&gt;
+	$(window).load( function(){
+		$(".container").gridify({
+			fullView: true
+		});
+	});
+&lt;/script&gt;
+		</pre>
+		
+		<h2>Output</h2>
+		<div>
+			<div class="container fullView">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container fullView">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container fullView">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container fullView">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container fullView">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container fullView">
+				<img src="http://placehold.it/100x100" alt="100x100" />
+			</div>
+			<div class="container fullView">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container fullView">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container wide fullView">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container wide fullView">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container wide fullView">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container wide fullView">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container wide fullView">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container wide fullView">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container wide fullView">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container tall fullView">
+				<img src="http://placehold.it/500x500" alt="500x500" />
+			</div>
+			<div class="container tall fullView">
+				<img src="http://placehold.it/100x500" alt="100x500" />
+			</div>
+			<div class="container tall fullView">
+				<img src="http://placehold.it/500x100" alt="500x100" />
+			</div>
+			<div class="container tall fullView">
+				<img src="http://placehold.it/500x800" alt="500x800" />
+			</div>
+			<div class="container tall fullView">
+				<img src="http://placehold.it/800x500" alt="800x500" />
+			</div>
+			<div class="container tall fullView">
+				<img src="http://placehold.it/100x50" alt="100x50" />
+			</div>
+			<div class="container tall fullView">
+				<img src="http://placehold.it/50x100" alt="50x100" />
+			</div>
+		</div>
+		<div>
+			<div class="container fullView">
+				<a href="#">
+					<img src="http://placehold.it/500x500" alt="500x500" />
+				</a>
+			</div>
+			<div class="container fullView">
+				<a href="#">
+					<img src="http://placehold.it/100x500" alt="100x500" />
+				</a>
+			</div>
+			<div class="container fullView">
+				<a href="#">
+					<img src="http://placehold.it/500x100" alt="500x100" />
+				</a>
+			</div>
+			<div class="container fullView">
+				<a href="#">
+					<img src="http://placehold.it/500x800" alt="500x800" />
+				</a>
+			</div>
+			<div class="container fullView">
+				<a href="#">
+					<img src="http://placehold.it/800x500" alt="800x500" />
+				</a>
+			</div>
+			<div class="container fullView">
+				<a href="#">
+					<img src="http://placehold.it/100x100" alt="100x100" />
+				</a>
+			</div>
+			<div class="container fullView">
+				<a href="#">
+					<img src="http://placehold.it/100x50" alt="100x50" />
+				</a>
+			</div>
+			<div class="container fullView">
 				<a href="#">
 					<img src="http://placehold.it/50x100" alt="50x100" />
 				</a>
