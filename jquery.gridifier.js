@@ -1,8 +1,8 @@
 (function( $ ){
-
-  $.fn.gridify = function( settings ) {  
+	$.fn.gridify = function( settings ) {  
 		var settings = $.extend( { // Default settings
 			forceFit: false,
+			fullView: false,
 			debug: false,
 			align: ""
 		}, settings);
@@ -12,9 +12,12 @@
 			$img = $("img", this), //instantiate the image to resize
 			$a = $img.parent("a"), //instantiate the image's possible anchor parent
 			$cover = $(".grdCover", this),
+			
 			forceFit = settings.forceFit, //decides whether the resize of images smaller than their container must be forced to 100%
+			fullView = settings.fullView, //decides whether the whole image should be fitted inside the container (max-width, max-height 100%)
 			debug = settings.debug, //show/hide values useful for debug
 			align = settings.align.split(" "), //align setting which decides how to align the img in the container
+			
 			isHeightAuto = isHeightAuto($container);
 			
 			fitImage($img);
@@ -35,7 +38,10 @@
 				var h = $($img).height();
 
 				if (debug){
-					console.log( $container[0], "autoHeight:", isHeightAuto );
+					console.log( "Container", $container[0]);
+					console.log( "forceFit:", forceFit );
+					console.log( "fullView:", fullView );
+					console.log( "autoHeight:", isHeightAuto );
 					console.log( "Container, before -", "Width:", cW +"px,", "Height:", cH +"px");
 					console.log( $img[0] );
 					console.log( "Image, before -", "Width:", w +"px,", "Height:", h +"px");
@@ -55,6 +61,7 @@
 					if (h > cH) { $container.css("height", $container.css("max-height") ); }
 					if (forceFit) { $img.addClass("grdForce"); }
 				}
+				if (fullView) { $img.addClass("grdFullView"); }
 				
 				w = $img.width();
 				h = $img.height();
