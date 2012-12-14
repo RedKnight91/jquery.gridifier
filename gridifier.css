@@ -8,3 +8,5 @@
 .container img.grdForce { min-height: 100%; min-width: 100%; } /*Forced size images*/
 .container img.grdFullView { max-width: 100%; max-height: inherit; } /*View full image*/
 .container .grdCover { display: block; width: 80%; height: 80%; padding: 10%; background: black; background: rgba(0,0,0,0.7); color: white; font-size: 14px; position: absolute; left: 0; visibility: hidden; }
+
+#isHeightAutoStage { visibility: hidden; height: 10px; }
