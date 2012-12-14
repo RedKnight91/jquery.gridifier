@@ -17,19 +17,17 @@
 			fullView = settings.fullView, //decides whether the whole image should be fitted inside the container (max-width, max-height 100%)
 			debug = settings.debug, //show/hide values useful for debug
 			align = settings.align.split(" "), //align setting which decides how to align the img in the container
+			isHeighAuto;
 			
-			isHeightAuto = isHeightAuto($container);
+			if ( $img.hasClass("grdHeightAuto") ) isHeightAuto = true; //the image could have been already processed (if the function is being re-called)
+			else if ( $img.hasClass("grdHeightFixed") ) isHeightAuto = false; //so there could be no need to call the isHeightAuto() function again
+			else isHeightAuto = isHeightAuto($container); //if it's the first time, however, it's gonna be called
 			
-			fitImage($img);
+			fitImage($img); //main method
 			
-			applyAlign();
+			applyAlign(); //here we apply the alignment chosen by the user
 			
-			applyCover();
-			
-			$container.hover( //image's cover handler (optional)
-				function() { $(".grdCover",this).stop(true).animate({top: 0}, 200) },
-				function() { $(".grdCover", this).animate({top: ($container.height() + "px")}, 200) }
-			);
+			applyCover(); //here we apply the clickable cover to the img
 			
 			function fitImage($img){
 				var cW = $container.width();
@@ -48,12 +46,14 @@
 				}
 				
 				if (isHeightAuto){
+					$img.addClass("grdHeightAuto");
 					if (cW < w && cH < h) {
 						$img.addClass("grdFlexSquare");
 						if ( $a[0] ) { $a.css("max-height", $container.css("max-height")).css("max-width",$container.css("max-width")); }
 					}
 				}
 				else{
+					$img.addClass("grdHeightFixed");
 					if ( w > h ) { $img.addClass("grdWide"); }
 					else if ( w < h ) { $img.addClass("grdTall"); }
 					else { $img.addClass("grdSquare"); }
@@ -86,6 +86,11 @@
 			
 			function applyCover() {
 				$cover.css("top",$container.height()).css("visibility","visible");
+				
+				$container.hover( //image's cover handler
+					function() { $cover.stop(true).animate({top: 0}, 200) },
+					function() { $cover.animate({top: ($container.height() + "px")}, 200) }
+				);
 			}
 			
 			function applyAlign() {
@@ -109,14 +114,15 @@
 			}
 			
 			function isHeightAuto(el) {
-				$('body').append('<div id="isHeightAutoStage" style="visibility: hidden; height: 10px;"></div>');
+				$('body').append('<div id="isHeightAutoStage" style=""></div>');
 
 				var clone = el.clone();
 				clone.appendTo('#isHeightAutoStage');
-				var initialHeight = clone.outerHeight(true);
+				var initialHeight = clone.outerHeight();
 				 
 				clone.html('');
-				var currentHeight = clone.outerHeight(true);
+				var currentHeight = clone.outerHeight();
+				console.log( initialHeight, currentHeight);
 				if (currentHeight < initialHeight) return true;
 				 
 				clone.remove();
