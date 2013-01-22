@@ -122,7 +122,7 @@
 				 
 				clone.html('');
 				var currentHeight = clone.outerHeight();
-				console.log( initialHeight, currentHeight);
+				if (debug) console.log( initialHeight, currentHeight);
 				if (currentHeight < initialHeight) return true;
 				 
 				clone.remove();
